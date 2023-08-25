@@ -5,6 +5,8 @@ import com.tpe.domain.Student;
 import com.tpe.dto.StudentDTO;
 import com.tpe.service.StudentService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +25,8 @@ import java.util.Map;
 @RequestMapping("/students")
 @RequiredArgsConstructor
 public class StudentController {
+
+    Logger logger = LoggerFactory.getLogger(StudentController.class);
 
     private final StudentService studentService;
 
@@ -98,11 +103,11 @@ public class StudentController {
             @RequestParam("direction")Sort.Direction direction // dogal siralamami yoksa tersden siralamami yapilacak
     ){
 
-        Pageable pageable = PageRequest.of(page,size, Sort.by(direction, prop));
+//        Pageable pageable = PageRequest.of(page,size, Sort.by(direction, prop));
+//
+//        Page<Student> studentPage = studentService.getAllWithPage(PageRequest.of(page,size, Sort.by(direction, prop)));
 
-        Page<Student> studentPage = studentService.getAllWithPage(pageable);
-
-        return ResponseEntity.ok(studentPage);
+        return ResponseEntity.ok(studentService.getAllWithPage(PageRequest.of(page,size, Sort.by(direction, prop))));
     }
 
     // Not: JPQL **********************************************************************
@@ -124,6 +129,17 @@ public class StudentController {
         return ResponseEntity.ok(studentDTO);
     }
 
+    //not: logger icin yazildi
+
+    @GetMapping("/welcome") //http://localhost:8080/students/welcome  + GET
+
+    public String welcome(HttpServletRequest request){
+
+        logger.warn("-----------Welcome {}" , request.getServletPath());
+
+        return "Welcome to Student Controller";
+
+    }
 
 
 
