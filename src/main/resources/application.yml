@@ -14,7 +14,7 @@ spring:
   security:
     user:
       name: name
-      password: password
+      password: password   #4d54a396-fecb-42f9-9a91-12e0ae3aa8dc
 
   jpa:
     hibernate:

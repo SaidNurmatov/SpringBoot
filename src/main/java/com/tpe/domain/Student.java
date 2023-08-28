@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Getter
@@ -52,6 +52,11 @@ public class Student {
 
     @OneToMany(mappedBy = "student")
     private List<Book>books;
+
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 
 
